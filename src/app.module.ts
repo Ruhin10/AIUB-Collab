@@ -12,6 +12,7 @@ import { DepartmentModule } from "./modules/department/department.module";
 import { CollabPostModule } from "./modules/collab_post/collab_post.module";
 import { UserProfileSkillModule } from "./modules/user_profile_skill/user_profile_skill.module";
 import { SkillModule } from "./modules/skill/skill.module";
+import { CollabApplicationModule } from "./modules/collab_application/collab_application.module";
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { SkillModule } from "./modules/skill/skill.module";
     CollabPostModule,
     UserProfileSkillModule,
     SkillModule,
+    CollabApplicationModule
   ],
   controllers: [AppController],
   providers: [AppService],
