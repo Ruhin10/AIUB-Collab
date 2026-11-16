@@ -40,7 +40,7 @@ import { UserProfileInterestModule } from "./modules/user_profile_interest/user_
     SkillModule,
     CollabApplicationModule,
     CollabPostPreferredDepartmentModule,
-    CollabApplicationModule
+    CollabApplicationModule,
     InterestModule,
     UserProfileInterestModule,
   ],
