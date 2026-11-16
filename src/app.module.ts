@@ -36,7 +36,7 @@ import { CollabPostPreferredDepartmentModule } from "./modules/collab_post_prefe
     CollabPostModule,
     UserProfileSkillModule,
     SkillModule,
-    // CollabApplicationModule,
+    CollabApplicationModule,
     CollabPostPreferredDepartmentModule,
   ],
   controllers: [AppController],
