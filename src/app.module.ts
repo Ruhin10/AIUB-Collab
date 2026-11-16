@@ -13,6 +13,8 @@ import { CollabPostModule } from "./modules/collab_post/collab_post.module";
 import { UserProfileSkillModule } from "./modules/user_profile_skill/user_profile_skill.module";
 import { SkillModule } from "./modules/skill/skill.module";
 import { CollabApplicationModule } from "./modules/collab_application/collab_application.module";
+import { InterestModule } from "./modules/interest/interest.module";
+import { UserProfileInterestModule } from "./modules/user_profile_interest/user_profile_interest.module";
 
 @Module({
   imports: [
@@ -36,6 +38,8 @@ import { CollabApplicationModule } from "./modules/collab_application/collab_app
     UserProfileSkillModule,
     SkillModule,
     CollabApplicationModule
+    InterestModule,
+    UserProfileInterestModule,
   ],
   controllers: [AppController],
   providers: [AppService],
