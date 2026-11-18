@@ -1,11 +1,18 @@
-import { IsNotEmpty } from "class-validator";
+import {
+    IsNotEmpty,
+    IsString,
+    ValidateIf,
+} from "class-validator";
 
 export class CreateSkillDto {
-    @IsNotEmpty()
+    @IsNotEmpty({ message: "skill_name is required" })
+    @IsString({ message: "skill_name must be a string" })
     skill_name!: string;
 }
 
 export class UpdateSkillDto {
-    @IsNotEmpty()
-    skill_name!: string;
+    @ValidateIf((_object, value) => value !== undefined)
+    @IsNotEmpty({ message: "skill_name cannot be empty" })
+    @IsString({ message: "skill_name must be a string" })
+    skill_name?: string;
 }
