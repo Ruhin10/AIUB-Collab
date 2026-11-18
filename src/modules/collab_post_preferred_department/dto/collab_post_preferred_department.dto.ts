@@ -1,23 +1,29 @@
-import { IsNotEmpty, IsOptional, IsUUID } from "class-validator";
+import { IsNotEmpty, IsUUID, ValidateIf } from "class-validator";
 
 export class CreateCollabPostPreferredDepartmentDto {
-  @IsNotEmpty()
-  @IsUUID()
+  @IsNotEmpty({ message: "collab_post_id is required" })
+  @IsUUID(undefined, {
+    message: "collab_post_id must be a valid UUID",
+  })
   collab_post_id!: string;
 
-  @IsNotEmpty()
-  @IsUUID()
+  @IsNotEmpty({ message: "department_id is required" })
+  @IsUUID(undefined, {
+    message: "department_id must be a valid UUID",
+  })
   department_id!: string;
 }
 
 export class UpdateCollabPostPreferredDepartmentDto {
-  @IsOptional()
-  @IsNotEmpty()
-  @IsUUID()
+  @ValidateIf((_object, value) => value !== undefined)
+  @IsUUID(undefined, {
+    message: "collab_post_id must be a valid UUID",
+  })
   collab_post_id?: string;
 
-  @IsOptional()
-  @IsNotEmpty()
-  @IsUUID()
+  @ValidateIf((_object, value) => value !== undefined)
+  @IsUUID(undefined, {
+    message: "department_id must be a valid UUID",
+  })
   department_id?: string;
 }
