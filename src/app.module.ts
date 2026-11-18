@@ -18,9 +18,11 @@ import { CollabApplicationModule } from "./modules/collab_application/collab_app
 import { CollabPostPreferredDepartmentModule } from "./modules/collab_post_preferred_department/collab_post_preferred_department.module";
 import { InterestModule } from "./modules/interest/interest.module";
 import { UserProfileInterestModule } from "./modules/user_profile_interest/user_profile_interest.module";
-import { CollabPostRequiredSkillModule } from "./modules/collab_post_required_skill/collab_post_required_skill.module";
+import { AuthModule } from "./modules/auth/auth.module";
+import { RolesGuard } from "./common/guard/roles.guard";
 import { UserProfileContactModule } from "./modules/user_profile_contact/user_profile_contact.module";
 import { CollabPostPreferredInterestModule } from "./modules/collab_post_preferred_interest/collab_post_preferred_interest.module";
+import { CollabPostRequiredSkillModule } from "./modules/collab_post_required_skill/collab_post_required_skill.module";
 
 @Module({
   imports: [
@@ -36,24 +38,25 @@ import { CollabPostPreferredInterestModule } from "./modules/collab_post_preferr
       isGlobal: true,
       load: [global_config],
     }),
-    UserModule, ComplaintReportModule,
-    UserProfileModule,
-    DepartmentModule,
+    AuthModule,
+    CollabApplicationModule,
     CollabPostModule,
-    UserProfileSkillModule,
-    SkillModule,
     CollabPostPreferredAcademicIdentityModule,
-    UserLinkedProfileModule,
-    CollabApplicationModule,
     CollabPostPreferredDepartmentModule,
-    CollabApplicationModule,
-    InterestModule,
-    UserProfileInterestModule,
-    CollabPostRequiredSkillModule,
-    UserProfileContactModule,
     CollabPostPreferredInterestModule,
+    CollabPostRequiredSkillModule,
+    ComplaintReportModule,
+    DepartmentModule,
+    InterestModule,
+    SkillModule,
+    UserModule,
+    UserLinkedProfileModule,
+    UserProfileModule,
+    UserProfileContactModule,
+    UserProfileInterestModule,
+    UserProfileSkillModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, RolesGuard],
 })
 export class AppModule {}
