@@ -8,7 +8,19 @@ import { JwtGuard } from "../../common/guard/jwt.guard";
 import { RolesGuard } from "../../common/guard/roles.guard";
 import { Roles } from "../../common/decorators/user-role.decorator";
 import { UserRole } from "../../common/enums/user-role.enum";
+import {
+    ApiBadRequestResponse,
+    ApiBearerAuth,
+    ApiForbiddenResponse,
+    ApiNotFoundResponse,
+    ApiOperation,
+    ApiParam,
+    ApiTags,
+    ApiUnauthorizedResponse,
+} from "@nestjs/swagger";
 
+@ApiTags("User Profile Skills")
+@ApiBearerAuth()
 @Controller("user-profile-skills")
 export class UserProfileSkillController {
     constructor(
@@ -16,6 +28,16 @@ export class UserProfileSkillController {
     ) {}
 
     @Get()
+    @ApiOperation({
+        summary: "Get all user profile skills",
+        description: "Returns user profile skill associations with their profile and skill relations.",
+    })
+    @ApiUnauthorizedResponse({
+        description: "Missing or invalid bearer token",
+    })
+    @ApiForbiddenResponse({
+        description: "Only Admin role is permitted",
+    })
     @UseGuards(JwtGuard, RolesGuard)
     @Roles(UserRole.ADMIN)
     async getUserProfileSkills() {
@@ -23,6 +45,24 @@ export class UserProfileSkillController {
     }
 
     @Get(":id")
+    @ApiOperation({
+        summary: "Get a user profile skill by ID",
+    })
+    @ApiParam({
+        name: "id",
+        required: true,
+        description: "UUID of the user profile skill",
+        example: "550e8400-e29b-41d4-a716-446655440008",
+    })
+    @ApiUnauthorizedResponse({
+        description: "Missing or invalid bearer token",
+    })
+    @ApiForbiddenResponse({
+        description: "Only Admin or User role is permitted",
+    })
+    @ApiNotFoundResponse({
+        description: "User profile skill not found",
+    })
     @UseGuards(JwtGuard, RolesGuard)
     @Roles(UserRole.ADMIN, UserRole.USER)
     async getUserProfileSkillById(@Param("id") id: string) {
@@ -30,6 +70,18 @@ export class UserProfileSkillController {
     }
 
     @Post()
+    @ApiOperation({
+        summary: "Create a user profile skill",
+    })
+    @ApiBadRequestResponse({
+        description: "Invalid user profile skill data",
+    })
+    @ApiUnauthorizedResponse({
+        description: "Missing or invalid bearer token",
+    })
+    @ApiForbiddenResponse({
+        description: "Only User role is permitted",
+    })
     @UseGuards(JwtGuard, RolesGuard)
     @Roles(UserRole.USER)
     async createUserProfileSkill(@Body() dto: CreateUserProfileSkillDto) {
@@ -37,6 +89,27 @@ export class UserProfileSkillController {
     }
 
     @Patch(":id")
+    @ApiOperation({
+        summary: "Update a user profile skill",
+    })
+    @ApiParam({
+        name: "id",
+        required: true,
+        description: "UUID of the user profile skill",
+        example: "550e8400-e29b-41d4-a716-446655440008",
+    })
+    @ApiBadRequestResponse({
+        description: "Invalid user profile skill update data",
+    })
+    @ApiUnauthorizedResponse({
+        description: "Missing or invalid bearer token",
+    })
+    @ApiForbiddenResponse({
+        description: "Only User role is permitted",
+    })
+    @ApiNotFoundResponse({
+        description: "User profile skill not found",
+    })
     @UseGuards(JwtGuard, RolesGuard)
     @Roles(UserRole.USER)
     async updateUserProfileSkill(
@@ -47,6 +120,24 @@ export class UserProfileSkillController {
     }
 
     @Delete(":id")
+    @ApiOperation({
+        summary: "Delete a user profile skill",
+    })
+    @ApiParam({
+        name: "id",
+        required: true,
+        description: "UUID of the user profile skill",
+        example: "550e8400-e29b-41d4-a716-446655440008",
+    })
+    @ApiUnauthorizedResponse({
+        description: "Missing or invalid bearer token",
+    })
+    @ApiForbiddenResponse({
+        description: "Only Admin or User role is permitted",
+    })
+    @ApiNotFoundResponse({
+        description: "User profile skill not found",
+    })
     @UseGuards(JwtGuard, RolesGuard)
     @Roles(UserRole.ADMIN, UserRole.USER)
     async deleteUserProfileSkill(@Param("id") id: string) {
