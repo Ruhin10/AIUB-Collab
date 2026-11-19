@@ -5,16 +5,7 @@ import {JwtGuard} from "@/common/guard/jwt.guard";
 import {RolesGuard} from "@/common/guard/roles.guard";
 import {Roles} from "@/common/decorators/user-role.decorator";
 import {UserRole} from "@/common/enums/user-role.enum";
-import {
-    ApiBadRequestResponse,
-    ApiBearerAuth,
-    ApiForbiddenResponse,
-    ApiNotFoundResponse,
-    ApiOperation,
-    ApiParam,
-    ApiTags,
-    ApiUnauthorizedResponse,
-} from "@nestjs/swagger";
+import {ApiBadRequestResponse, ApiBearerAuth, ApiForbiddenResponse, ApiNotFoundResponse, ApiOperation, ApiParam, ApiTags, ApiUnauthorizedResponse} from "@nestjs/swagger";
 
 @ApiTags("Collaboration Posts")
 @ApiBearerAuth()
@@ -24,7 +15,7 @@ export class CollabPostController {
     constructor(
         private readonly collabPostService: CollabPostService,
     ) {}
-
+    // Get
     @ApiOperation({
         summary: "Get all collaboration posts",
         description: "Returns collaboration posts and their user profile relation.",
@@ -37,7 +28,7 @@ export class CollabPostController {
     async getCollabPosts() {
         return await this.collabPostService.getCollabPosts();
     }
-
+    // Get by ID
     @ApiOperation({
         summary: "Get a collaboration post by ID",
     })
@@ -58,7 +49,7 @@ export class CollabPostController {
     async getCollabPostById(@Param("id") id: string) {
         return await this.collabPostService.getCollabPostById(id);
     }
-
+    // Post
     @ApiOperation({
         summary: "Create a new collaboration post",
         description: "Creates a post after validating the future deadline and profile-owned contact.",
@@ -73,12 +64,12 @@ export class CollabPostController {
         description: "Post contact not found",
     })
     @Post()
-    @UseGuards(JwtGuard)
-    @Roles(UserRole.ADMIN, UserRole.USER)
+    @UseGuards(JwtGuard, RolesGuard)
+    @Roles(UserRole.USER)
     async createCollabPost(@Body() dto: CreateCollabPostDto) {
         return await this.collabPostService.createCollabPost(dto);
     }
-
+    // Patch
     @ApiOperation({
         summary: "Update a collaboration post",
     })
@@ -102,11 +93,11 @@ export class CollabPostController {
     })
     @Patch(":id")
     @UseGuards(JwtGuard, RolesGuard)
-    @Roles(UserRole.ADMIN, UserRole.USER)
+    @Roles(UserRole.USER)
     async updateCollabPost(@Param("id") id: string, @Body() dto: UpdateCollabPostDto) {
         return await this.collabPostService.updateCollabPost(id, dto);
     }
-
+    // Delete
     @ApiOperation({
         summary: "Delete a collaboration post",
     })

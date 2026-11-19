@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from "@nestjs/common";
 import {
   CreateCollabPostPreferredDepartmentDto,
@@ -16,14 +17,34 @@ import { UserRole } from "@/src/common/enums/user-role.enum";
 import { Roles } from "@/src/common/decorators/user-role.decorator";
 import { RolesGuard } from "@/src/common/guard/roles.guard";
 import { JwtGuard } from "@/src/common/guard/jwt.guard";
-import {UseGuards} from "@nestjs/common";
+import {
+  ApiBadRequestResponse,
+  ApiBearerAuth,
+  ApiForbiddenResponse,
+  ApiNotFoundResponse,
+  ApiOperation,
+  ApiParam,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from "@nestjs/swagger";
 
+@ApiTags("Collaboration Post Preferred Departments")
+@ApiBearerAuth()
 @Controller("collab-post-preferred-departments")
 export class CollabPostPreferredDepartmentController {
   constructor(
     private readonly preferredDepartmentService: CollabPostPreferredDepartmentService,
   ) {}
 
+  @ApiOperation({
+    summary: "Get all preferred departments for collaboration posts",
+  })
+  @ApiUnauthorizedResponse({
+    description: "Missing or invalid bearer token",
+  })
+  @ApiForbiddenResponse({
+    description: "User role is not permitted",
+  })
   @Get()
   @UseGuards(JwtGuard, RolesGuard)
   @Roles(UserRole.USER)
@@ -31,6 +52,24 @@ export class CollabPostPreferredDepartmentController {
     return this.preferredDepartmentService.getCollabPostPreferredDepartments();
   }
 
+  @ApiOperation({
+    summary: "Get a preferred department by ID",
+  })
+  @ApiParam({
+    name: "id",
+    required: true,
+    description: "UUID of the preferred-department record",
+    example: "550e8400-e29b-41d4-a716-446655440002",
+  })
+  @ApiUnauthorizedResponse({
+    description: "Missing or invalid bearer token",
+  })
+  @ApiForbiddenResponse({
+    description: "User role is not permitted",
+  })
+  @ApiNotFoundResponse({
+    description: "Preferred department not found",
+  })
   @Get(":id")
   @UseGuards(JwtGuard, RolesGuard)
   @Roles(UserRole.USER)
@@ -40,6 +79,18 @@ export class CollabPostPreferredDepartmentController {
     );
   }
 
+  @ApiOperation({
+    summary: "Add a preferred department to a collaboration post",
+  })
+  @ApiBadRequestResponse({
+    description: "Invalid collaboration post or department UUID",
+  })
+  @ApiUnauthorizedResponse({
+    description: "Missing or invalid bearer token",
+  })
+  @ApiForbiddenResponse({
+    description: "User role is not permitted",
+  })
   @Post()
   @UseGuards(JwtGuard, RolesGuard)
   @Roles(UserRole.USER)
@@ -51,6 +102,27 @@ export class CollabPostPreferredDepartmentController {
     );
   }
 
+  @ApiOperation({
+    summary: "Update a preferred department record",
+  })
+  @ApiParam({
+    name: "id",
+    required: true,
+    description: "UUID of the preferred-department record",
+    example: "550e8400-e29b-41d4-a716-446655440002",
+  })
+  @ApiBadRequestResponse({
+    description: "Invalid collaboration post or department UUID",
+  })
+  @ApiUnauthorizedResponse({
+    description: "Missing or invalid bearer token",
+  })
+  @ApiForbiddenResponse({
+    description: "User role is not permitted",
+  })
+  @ApiNotFoundResponse({
+    description: "Preferred department not found",
+  })
   @Patch(":id")
   @UseGuards(JwtGuard, RolesGuard)
   @Roles(UserRole.USER)
@@ -64,6 +136,24 @@ export class CollabPostPreferredDepartmentController {
     );
   }
 
+  @ApiOperation({
+    summary: "Delete a preferred department record",
+  })
+  @ApiParam({
+    name: "id",
+    required: true,
+    description: "UUID of the preferred-department record",
+    example: "550e8400-e29b-41d4-a716-446655440002",
+  })
+  @ApiUnauthorizedResponse({
+    description: "Missing or invalid bearer token",
+  })
+  @ApiForbiddenResponse({
+    description: "User role is not permitted",
+  })
+  @ApiNotFoundResponse({
+    description: "Preferred department not found",
+  })
   @Delete(":id")
   @UseGuards(JwtGuard, RolesGuard)
   @Roles(UserRole.USER)

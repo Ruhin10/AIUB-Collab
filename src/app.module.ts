@@ -23,6 +23,7 @@ import { RolesGuard } from "./common/guard/roles.guard";
 import { UserProfileContactModule } from "./modules/user_profile_contact/user_profile_contact.module";
 import { CollabPostPreferredInterestModule } from "./modules/collab_post_preferred_interest/collab_post_preferred_interest.module";
 import { CollabPostRequiredSkillModule } from "./modules/collab_post_required_skill/collab_post_required_skill.module";
+import { MailsModule } from "./mails/mails.module";
 
 @Module({
   imports: [
@@ -55,6 +56,7 @@ import { CollabPostRequiredSkillModule } from "./modules/collab_post_required_sk
     UserProfileContactModule,
     UserProfileInterestModule,
     UserProfileSkillModule,
+    MailsModule,
   ],
   controllers: [AppController],
   providers: [AppService, RolesGuard],
