@@ -10,6 +10,9 @@ import {
     UseGuards,
 } from "@nestjs/common";
 import { JwtGuard } from "../../common/guard/jwt.guard";
+import { RolesGuard } from "../../common/guard/roles.guard";
+import { Roles } from "../../common/decorators/user-role.decorator";
+import { UserRole } from "../../common/enums/user-role.enum";
 import { UserService } from "./user.service";
 import { CreateUserDto, UpdateUserDto } from "./dto/user.dto";
 
@@ -25,28 +28,38 @@ export class UserController {
     }
 
     @Get()
+    @UseGuards(JwtGuard, RolesGuard)
+    @Roles(UserRole.ADMIN)
     async getUsers() {
         return await this.userService.getUsers();
     }
 
     @Get(":id")
+    @UseGuards(JwtGuard, RolesGuard)
+    @Roles(UserRole.ADMIN)
     async getUsersById(@Param("id") id: string) {
         return await this.userService.getUsersById(id);
     }
 
     @Post()
-        async createUser(@Body() dto: CreateUserDto) {
-            return await this.userService.createUser(dto);
+    @UseGuards(JwtGuard, RolesGuard)
+    @Roles(UserRole.ADMIN)
+    async createUser(@Body() dto: CreateUserDto) {
+        return await this.userService.createUser(dto);
     }
     
     @Patch(":id")
-        async updateUser(@Param("id") id: string, @Body() dto: UpdateUserDto) {
-            return await this.userService.updateUser(id, dto);
+    @UseGuards(JwtGuard, RolesGuard)
+    @Roles(UserRole.ADMIN)
+    async updateUser(@Param("id") id: string, @Body() dto: UpdateUserDto) {
+        return await this.userService.updateUser(id, dto);
     }
 
     @Delete(":id")
-        async deleteUser(@Param("id") id: string) {
-            return await this.userService.deleteUser(id);
+    @UseGuards(JwtGuard, RolesGuard)
+    @Roles(UserRole.ADMIN)
+    async deleteUser(@Param("id") id: string) {
+        return await this.userService.deleteUser(id);
     }
 
 }
