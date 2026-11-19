@@ -28,6 +28,17 @@ export class CreateCollabPostPreferredAcademicIdentityDto {
 
 export class UpdateCollabPostPreferredAcademicIdentityDto {
   @ApiPropertyOptional({
+    description: "Updated UUID of the collaboration post",
+    format: "uuid",
+    example: "550e8400-e29b-41d4-a716-446655440000",
+  })
+  @IsOptional()
+  @IsUUID(undefined, {
+    message: "collab_post_id must be a valid UUID",
+  })
+  collab_post_id?: string;
+
+  @ApiPropertyOptional({
     description: "Updated preferred academic identity",
     enum: AcademicIdentity,
     example: AcademicIdentity.FACULTY,

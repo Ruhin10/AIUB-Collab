@@ -38,6 +38,18 @@ export class CreateCollabApplicationDto {
   applicant_message!: string;
 
   @ApiProperty({
+    description: "Current status of the collaboration application",
+    enum: ApplicationStatus,
+    example: ApplicationStatus.PENDING,
+  })
+  @IsNotEmpty({ message: "application_status is required" })
+  @IsEnum(ApplicationStatus, {
+    message:
+      "application_status must be Pending, Accepted, Rejected, Withdrawn, or Recruited",
+  })
+  application_status!: ApplicationStatus;
+
+  @ApiProperty({
     description: "UUID of a contact belonging to the applicant's profile",
     format: "uuid",
     example: "550e8400-e29b-41d4-a716-446655440002",
