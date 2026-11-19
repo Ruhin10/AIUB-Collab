@@ -13,6 +13,7 @@ import { JwtGuard } from "../../common/guard/jwt.guard";
 import { RolesGuard } from "../../common/guard/roles.guard";
 import { Roles } from "../../common/decorators/user-role.decorator";
 import { UserRole } from "../../common/enums/user-role.enum";
+import { SuperAdminGuard } from "../../common/guard/super-admin.guard";
 import { UserService } from "./user.service";
 import { CreateUserDto, UpdateUserDto } from "./dto/user.dto";
 import {
@@ -150,12 +151,12 @@ export class UserController {
         description: "Missing or invalid bearer token",
     })
     @ApiForbiddenResponse({
-        description: "Only Admin role is permitted",
+        description: "Only Super Admin role is permitted",
     })
     @ApiNotFoundResponse({
         description: "User not found",
     })
-    @UseGuards(JwtGuard, RolesGuard)
+    @UseGuards(JwtGuard, RolesGuard, SuperAdminGuard)
     @Roles(UserRole.ADMIN)
     async deleteUser(@Param("id") id: string) {
         return await this.userService.deleteUser(id);
