@@ -1,11 +1,18 @@
-import { IsNotEmpty } from "class-validator";
+import {
+    IsNotEmpty,
+    IsString,
+    ValidateIf,
+} from "class-validator";
 
 export class CreateDepartmentDto {
-    @IsNotEmpty()
+    @IsNotEmpty({ message: "department_name is required" })
+    @IsString({ message: "department_name must be a string" })
     department_name!: string;
 }
 
 export class UpdateDepartmentDto {
-    @IsNotEmpty()
-    department_name!: string;
+    @ValidateIf((_object, value) => value !== undefined)
+    @IsNotEmpty({ message: "department_name cannot be empty" })
+    @IsString({ message: "department_name must be a string" })
+    department_name?: string;
 }

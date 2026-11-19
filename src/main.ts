@@ -7,11 +7,17 @@ import { Request, Response, NextFunction } from "express";
 import cookieParser from "cookie-parser";
 import helmet from "helmet";
 import { join } from "path";
+import {ValidationPipe} from "@/src/common/pipes/validation.pipe";
+import {HttpExceptionFilter} from "@/src/common/filters/http-exception.filter";
 
 dotenv.config();
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+  app.useGlobalPipes(new ValidationPipe());
+
+  app.useGlobalFilters(new HttpExceptionFilter());
 
   app.useStaticAssets(join(process.cwd(), "uploads"), {
     prefix: "/uploads/",
