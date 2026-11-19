@@ -6,6 +6,7 @@ import { User } from "../user/entities/user.entity";
 import { AuthController } from "./auth.controller";
 import { AuthService } from "./auth.service";
 import { JwtStrategy } from "./strategies/jwt.strategy";
+import { MailsModule } from "@/src/mails/mails.module";
 
 @Module({
     imports: [
@@ -17,6 +18,7 @@ import { JwtStrategy } from "./strategies/jwt.strategy";
                 expiresIn: "15m",
             },
         }),
+        MailsModule,
     ],
     controllers: [AuthController],
     providers: [AuthService, JwtStrategy],

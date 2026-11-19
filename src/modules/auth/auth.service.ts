@@ -11,6 +11,7 @@ import { AccountStatus } from "../../common/enums/account-status.enum";
 import { UserRole } from "../../common/enums/user-role.enum";
 import { User } from "../user/entities/user.entity";
 import { LoginDto, RegisterDto } from "./dto/auth.dto";
+import { MailerService } from "@/src/mails/mailer.service";
 
 @Injectable()
 export class AuthService {
@@ -18,6 +19,7 @@ export class AuthService {
         @InjectRepository(User)
         private readonly userRepository: Repository<User>,
         private readonly jwtService: JwtService,
+        private readonly mailerService: MailerService
     ) {}
 
     async register(dto: RegisterDto) {
@@ -39,6 +41,12 @@ export class AuthService {
         });
 
         const savedUser = await this.userRepository.save(user);
+        try{
+            await this.mailerService.sendWelcomeEmail(savedUser.user_email, savedUser.user_name);
+        } 
+        catch (error) {
+            console.error("Failed to send welcome email:", error);
+        }
         return this.createAuthResponse(savedUser);
     }
 
