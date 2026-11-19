@@ -20,6 +20,7 @@ import { InterestModule } from "./modules/interest/interest.module";
 import { UserProfileInterestModule } from "./modules/user_profile_interest/user_profile_interest.module";
 import { AuthModule } from "./modules/auth/auth.module";
 import { RolesGuard } from "./common/guard/roles.guard";
+import { SuperAdminGuard } from "./common/guard/super-admin.guard";
 import { UserProfileContactModule } from "./modules/user_profile_contact/user_profile_contact.module";
 import { CollabPostPreferredInterestModule } from "./modules/collab_post_preferred_interest/collab_post_preferred_interest.module";
 import { CollabPostRequiredSkillModule } from "./modules/collab_post_required_skill/collab_post_required_skill.module";
@@ -59,6 +60,6 @@ import { MailsModule } from "./mails/mails.module";
     MailsModule,
   ],
   controllers: [AppController],
-  providers: [AppService, RolesGuard],
+  providers: [AppService, RolesGuard, SuperAdminGuard],
 })
 export class AppModule {}
