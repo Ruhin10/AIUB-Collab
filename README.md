@@ -54,7 +54,7 @@ collaboration opportunities. AIUB Collab aims to address this challenge by provi
 - **Input Validation with DTOs:** Strict create/update DTOs for every write endpoint. Strips unwhitelisted fields and returns formatted `400 Bad Request` messages.
 - **HTTP Exception Handling:** Global `HttpExceptionFilter` ensuring unified JSON responses (`{ success, statusCode, message, path, timestamp }`).
 
-### 2. Bonus Features Implemented (5/10 included)
+### 2. Bonus Features Implemented (6/10 included)
 - **Custom Decorators:** `@CurrentUser()`, `@Roles()` decorator for authentication and authorization.
 - **Env:** Configuration kept outside the code.
 - **Mailer:** Welcome mail on user registration using google SMTP.
